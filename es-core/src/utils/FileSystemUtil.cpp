@@ -23,6 +23,15 @@
 #include <unistd.h>
 #endif // _WIN32
 
+#if defined(__QNX__)
+//Silly workaround, as -D_LARGEFILE64_SOURCE is not working for me.
+#define stat64 stat
+int lstat64(const char* path, struct stat64 *buf){
+	return lstat(path, buf);
+}
+#endif
+
+
 //////////////////////////////////////////////////////////////////////////
 
 namespace Utils

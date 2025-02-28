@@ -96,6 +96,14 @@ else()
     endif()
 endif()
 
+if(QNX)
+    set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+    set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)  
+    set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+    set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM ONLY)
+    set(PKG_CONFIG_EXECUTABLE "/usr/bin/pkgconf")
+endif()  
+
 find_package(Freetype REQUIRED)
 find_package(FreeImage REQUIRED)
 find_package(SDL2 REQUIRED)
@@ -108,6 +116,7 @@ if(CEC)
     find_package(libCEC REQUIRED)
 endif()
 
+#Note for QNX: Will eventually need QSA
 #add ALSA for Linux
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     find_package(ALSA REQUIRED)
@@ -155,9 +164,11 @@ endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX)
     #check for G++ 4.7+
-    execute_process(COMMAND ${CMAKE_CXX_COMPILER} -dumpversion OUTPUT_VARIABLE G++_VERSION)
-    if (G++_VERSION VERSION_LESS 4.7)
-            message(SEND_ERROR "You need at least G++ 4.7 to compile EmulationStation!")
+    if(NOT QNX) #qcc/q++ are all above v4.7, however they are missing -dumpversion
+        execute_process(COMMAND ${CMAKE_CXX_COMPILER} -dumpversion OUTPUT_VARIABLE G++_VERSION)
+        if (G++_VERSION VERSION_LESS 4.7)
+                message(SEND_ERROR "You need at least G++ 4.7 to compile EmulationStation!")
+        endif()
     endif()
 
     #set up compiler flags for GCC
