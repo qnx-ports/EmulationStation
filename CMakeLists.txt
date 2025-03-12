@@ -101,8 +101,8 @@ if(QNX)
     set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)  
     set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
     set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM ONLY)
-    set(PKG_CONFIG_EXECUTABLE "/usr/bin/pkgconf")
 endif()  
+
 
 find_package(Freetype REQUIRED)
 find_package(FreeImage REQUIRED)
