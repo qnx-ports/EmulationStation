@@ -414,6 +414,7 @@ std::shared_ptr<IGameListView> ViewController::getGameListView(SystemData* syste
 
 std::shared_ptr<SystemView> ViewController::getSystemListView()
 {
+	//printf("System View Debug\n"); //QNX
 	//if we already made one, return that one
 	if(mSystemListView)
 		return mSystemListView;
@@ -461,6 +462,7 @@ void ViewController::update(int deltaTime)
 
 void ViewController::render(const Transform4x4f& parentTrans)
 {
+	printf("Rendering Debug Message\n");
 	Transform4x4f trans = mCamera * parentTrans;
 	Transform4x4f transInverse;
 	transInverse.invert(trans);
@@ -478,6 +480,7 @@ void ViewController::render(const Transform4x4f& parentTrans)
 	// draw gamelists
 	for(auto it = mGameListViews.cbegin(); it != mGameListViews.cend(); it++)
 	{
+		printf("Gamelist count\n"); //QNX
 		// clipping
 		Vector3f guiStart = it->second->getPosition();
 		Vector3f guiEnd = it->second->getPosition() + Vector3f(it->second->getSize().x(), it->second->getSize().y(), 0);
@@ -487,12 +490,14 @@ void ViewController::render(const Transform4x4f& parentTrans)
 			it->second->render(trans);
 	}
 
+	printf("Post Gamelist count\n"); //QNX
 	if(mWindow->peekGui() == this)
 		mWindow->renderHelpPromptsEarly();
 
 	// fade out
 	if(mFadeOpacity)
 	{
+		printf("Fade\n"); //QNX
 		unsigned int fadeColor = 0x00000000 | (unsigned char)(mFadeOpacity * 255);
 		Renderer::setMatrix(parentTrans);
 		Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(), fadeColor, fadeColor);

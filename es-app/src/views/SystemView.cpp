@@ -344,9 +344,12 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
 }
 
 void SystemView::render(const Transform4x4f& parentTrans)
-{
-	if(size() == 0)
+{	
+	printf("SystemView render call\n");
+	if(size() == 0){
+		printf("systemview rendering exit\n");
 		return;  // nothing to render
+	}
 
 	Transform4x4f trans = getTransform() * parentTrans;
 

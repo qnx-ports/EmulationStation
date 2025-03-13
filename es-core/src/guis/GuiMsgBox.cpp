@@ -61,6 +61,8 @@ GuiMsgBox::GuiMsgBox(Window* window, const std::string& text,
 
 	addChild(&mBackground);
 	addChild(&mGrid);
+	printf("GUIBox End\n"); //QNX
+	printf("text: %s\n", text);
 }
 
 bool GuiMsgBox::input(InputConfig* config, Input input)
@@ -96,6 +98,7 @@ void GuiMsgBox::onSizeChanged()
 
 void GuiMsgBox::deleteMeAndCall(const std::function<void()>& func)
 {
+	printf("GUI MSG BOX Delete\n");
 	auto funcCopy = func;
 	delete this;
 
