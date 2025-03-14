@@ -90,6 +90,15 @@ namespace Renderer
 		screenOffsetX = Settings::getInstance()->getInt("ScreenOffsetX") ? Settings::getInstance()->getInt("ScreenOffsetX") : 0;
 		screenOffsetY = Settings::getInstance()->getInt("ScreenOffsetY") ? Settings::getInstance()->getInt("ScreenOffsetY") : 0;
 		screenRotate  = Settings::getInstance()->getInt("ScreenRotate")  ? Settings::getInstance()->getInt("ScreenRotate")  : 0;
+		printf("Renderer.cpp | Reading in values... \n ");
+		printf("             | windowWidth %d \n ", windowWidth);
+		printf("             | windowHeight %d \n ", windowHeight);
+		printf("             | screenWidth %d \n ", screenWidth);
+		printf("             | screenHeight %d \n ", screenHeight);
+		printf("             | screenOffsetX %d \n ", screenOffsetX);
+		printf("             | screenOffsetY %d \n ", screenOffsetY);
+		printf("             | screenRotate %d \n ", screenRotate);
+		
 
 		setupWindow();
 
@@ -263,8 +272,9 @@ namespace Renderer
 	void drawRect(const float _x, const float _y, /*const*/ float _w, /*const*/ float _h, const unsigned int _color, const unsigned int _colorEnd, bool horizontalGradient, const Blend::Factor _srcBlendFactor, const Blend::Factor _dstBlendFactor)
 	{
 		
-		_w = 1920;
-		_h = 1080;
+		//QNX
+		// _w = 1920;
+		// _h = 1080;
 		const unsigned int color    = /*convertColor(_color);*/ convertColor(0xAABBCCFF); //QNX
 		const unsigned int colorEnd = convertColor(_colorEnd);
 		printf("Draw rect call x%f y%f w%f h%f c=0x%08X \n", _x, _y, _w, _h, color); //QNX

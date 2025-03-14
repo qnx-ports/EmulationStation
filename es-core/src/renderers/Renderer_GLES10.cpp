@@ -215,6 +215,7 @@ namespace Renderer
 
 	void drawTriangleStrips(const Vertex* _vertices, const unsigned int _numVertices, const Blend::Factor _srcBlendFactor, const Blend::Factor _dstBlendFactor)
 	{
+		printf("QNX DEBUG: GLES10_DRTRISTRIPS\n"); //QNX
 		GL_CHECK_ERROR(glVertexPointer(  2, GL_FLOAT,         sizeof(Vertex), &_vertices[0].pos));
 		GL_CHECK_ERROR(glTexCoordPointer(2, GL_FLOAT,         sizeof(Vertex), &_vertices[0].tex));
 		GL_CHECK_ERROR(glColorPointer(   4, GL_UNSIGNED_BYTE, sizeof(Vertex), &_vertices[0].col));

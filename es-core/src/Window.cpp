@@ -33,19 +33,17 @@ Window::~Window()
 
 void Window::pushGui(GuiComponent* gui)
 {
-	printf("Inside Window::pushGui <<<\n"); //QNX
+	printf("Window.cpp: | Inside Window::pushGui <<<\n"); //QNX
 	if (mGuiStack.size() > 0)
 	{
 		auto& top = mGuiStack.back();
 		top->topWindow(false);
 	}
-	printf("WPG 1, gui=%u %d\n", gui, gui);//QNX
+	
 	if(!gui) printf("invalid gui\n");
 	mGuiStack.push_back(gui);
-	
-	printf("WPG 1.1\n");//QNX
+
 	gui->updateHelpPrompts();
-	printf("WPG 2\n");//QNX
 
 }
 

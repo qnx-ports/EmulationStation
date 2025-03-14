@@ -12,8 +12,8 @@
 
 namespace Renderer
 {
-
-#if defined(_DEBUG)
+// #define _DEBUG
+// #if defined(_DEBUG)
 #define GL_CHECK_ERROR(Function) (Function, _GLCheckError(#Function))
 
 	static void _GLCheckError(const char* _funcName)
@@ -23,9 +23,10 @@ namespace Renderer
 		if(errorCode != GL_NO_ERROR)
 			LOG(LogError) << "GL error: " << _funcName << " failed with error code: " << errorCode;
 	}
-#else
-#define GL_CHECK_ERROR(Function) (Function)
-#endif
+// #else
+// #define GL_CHECK_ERROR(Function) (Function)
+// #endif
+// #undef _DEBUG
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -44,6 +45,7 @@ namespace Renderer
 
 	static void setupShaders()
 	{
+		//printf("SETUP SHADERS\n");//QNX
 		// vertex shader
 		const GLchar* vertexSource =
 			"uniform   mat4 u_mvp; \n"
@@ -63,6 +65,7 @@ namespace Renderer
 		GL_CHECK_ERROR(glShaderSource(vertexShader, 1, &vertexSource, nullptr));
 		GL_CHECK_ERROR(glCompileShader(vertexShader));
 
+		printf("EmulationStation: | setupShaders\n");//QNX
 		{
 			GLint isCompiled = GL_FALSE;
 			GLint maxLength  = 0;
@@ -190,6 +193,7 @@ namespace Renderer
 
 	static void setupVertexBuffer()
 	{
+		//printf("SETUP VERTEX BUFFER\n");//QNX
 		GL_CHECK_ERROR(glGenBuffers(1, &vertexBuffer));
 		GL_CHECK_ERROR(glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer));
 
@@ -199,6 +203,7 @@ namespace Renderer
 
 	static GLenum convertBlendFactor(const Blend::Factor _blendFactor)
 	{
+		//printf("CONVERT BLEND FACTOR\n");//QNX
 		switch(_blendFactor)
 		{
 			case Blend::ZERO:                { return GL_ZERO;                } break;
@@ -220,6 +225,7 @@ namespace Renderer
 
 	static GLenum convertTextureType(const Texture::Type _type)
 	{
+		//printf("CONVERT TEXTURE TYPE\n");//QNX
 		switch(_type)
 		{
 			case Texture::RGBA:  { return GL_RGBA;            } break;
@@ -239,7 +245,11 @@ namespace Renderer
 		const unsigned char b = ((_color & 0x0000ff00) >>  8) & 255;
 		const unsigned char a = ((_color & 0x000000ff)      ) & 255;
 
+#ifdef __QNX__ //SHOULD BE RGBX
+		return ((r << 24) | (g << 16) | (b << 8) | (a));
+#else
 		return ((a << 24) | (b << 16) | (g << 8) | (r));
+	#endif
 
 	} // convertColor
 
@@ -247,7 +257,8 @@ namespace Renderer
 
 	unsigned int getWindowFlags()
 	{
-		return SDL_WINDOW_OPENGL;
+		printf("EmulationStation: | WINDOW FLAGS\n");//QNX
+		return SDL_WINDOW_OPENGL; //is this right????? OPENGLES??
 
 	} // getWindowFlags
 
@@ -255,6 +266,7 @@ namespace Renderer
 
 	void setupWindow()
 	{
+		printf("EmulationStaion: | SETUP WINDOW\n");//QNX
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,  SDL_GL_CONTEXT_PROFILE_ES);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
@@ -272,6 +284,7 @@ namespace Renderer
 
 	void createContext()
 	{
+		printf("EmulationStation: | CREATE CONTEXT\n");//QNX
 		sdlContext = SDL_GL_CreateContext(getSDLWindow());
 		SDL_GL_MakeCurrent(getSDLWindow(), sdlContext);
 
@@ -304,6 +317,7 @@ namespace Renderer
 
 	void destroyContext()
 	{
+		printf("EmulationStation: | DESTROY CONTEXT\n");//QNX
 		SDL_GL_DeleteContext(sdlContext);
 		sdlContext = nullptr;
 
@@ -313,6 +327,7 @@ namespace Renderer
 
 	unsigned int createTexture(const Texture::Type _type, const bool _linear, const bool _repeat, const unsigned int _width, const unsigned int _height, const void* _data)
 	{
+		//printf("CREATETEXTURE\n");//QNX
 		const GLenum type = convertTextureType(_type);
 		unsigned int texture;
 
@@ -354,6 +369,7 @@ namespace Renderer
 
 	void destroyTexture(const unsigned int _texture)
 	{
+		//printf("DESTROYTEXTURE\n");//QNX
 		GL_CHECK_ERROR(glDeleteTextures(1, &_texture));
 
 	} // destroyTexture
@@ -362,6 +378,7 @@ namespace Renderer
 
 	void updateTexture(const unsigned int _texture, const Texture::Type _type, const unsigned int _x, const unsigned _y, const unsigned int _width, const unsigned int _height, const void* _data)
 	{
+		//printf("UPDATETEXTURE\n");//QNX
 		const GLenum type = convertTextureType(_type);
 
 		GL_CHECK_ERROR(glBindTexture(GL_TEXTURE_2D, _texture));
@@ -395,6 +412,7 @@ namespace Renderer
 
 	void bindTexture(const unsigned int _texture)
 	{
+		//printf("BINDTEXTURE\n");//QNX
 		if(_texture == 0) GL_CHECK_ERROR(glBindTexture(GL_TEXTURE_2D, whiteTexture));
 		else              GL_CHECK_ERROR(glBindTexture(GL_TEXTURE_2D, _texture));
 
@@ -404,6 +422,7 @@ namespace Renderer
 
 	void drawLines(const Vertex* _vertices, const unsigned int _numVertices, const Blend::Factor _srcBlendFactor, const Blend::Factor _dstBlendFactor)
 	{
+		//printf("DRAWLINES\n");//QNX
 		GL_CHECK_ERROR(glVertexAttribPointer(posAttrib, 2, GL_FLOAT,         GL_FALSE, sizeof(Vertex), (const void*)offsetof(Vertex, pos)));
 		GL_CHECK_ERROR(glVertexAttribPointer(texAttrib, 2, GL_FLOAT,         GL_FALSE, sizeof(Vertex), (const void*)offsetof(Vertex, tex)));
 		GL_CHECK_ERROR(glVertexAttribPointer(colAttrib, 4, GL_UNSIGNED_BYTE, GL_TRUE,  sizeof(Vertex), (const void*)offsetof(Vertex, col)));
@@ -419,6 +438,7 @@ namespace Renderer
 
 	void drawTriangleStrips(const Vertex* _vertices, const unsigned int _numVertices, const Blend::Factor _srcBlendFactor, const Blend::Factor _dstBlendFactor)
 	{
+		//printf("QNX DEBUG: GLES20_DRTRISTRIPS\n"); //QNX
 		GL_CHECK_ERROR(glVertexAttribPointer(posAttrib, 2, GL_FLOAT,         GL_FALSE, sizeof(Vertex), (const void*)offsetof(Vertex, pos)));
 		GL_CHECK_ERROR(glVertexAttribPointer(texAttrib, 2, GL_FLOAT,         GL_FALSE, sizeof(Vertex), (const void*)offsetof(Vertex, tex)));
 		GL_CHECK_ERROR(glVertexAttribPointer(colAttrib, 4, GL_UNSIGNED_BYTE, GL_TRUE,  sizeof(Vertex), (const void*)offsetof(Vertex, col)));
@@ -434,6 +454,7 @@ namespace Renderer
 
 	void setProjection(const Transform4x4f& _projection)
 	{
+		//printf("SETPROJECTION\n");//QNX
 		projectionMatrix = _projection;
 
 		Transform4x4f mvpMatrix = projectionMatrix * worldViewMatrix;
@@ -445,6 +466,7 @@ namespace Renderer
 
 	void setMatrix(const Transform4x4f& _matrix)
 	{
+		//printf("SETMATRIX\n");//QNX
 		worldViewMatrix = _matrix;
 		worldViewMatrix.round();
 
@@ -457,6 +479,7 @@ namespace Renderer
 
 	void setViewport(const Rect& _viewport)
 	{
+		//printf("SETVIEWPORT\n");//QNX
 		// glViewport starts at the bottom left of the window
 		GL_CHECK_ERROR(glViewport( _viewport.x, getWindowHeight() - _viewport.y - _viewport.h, _viewport.w, _viewport.h));
 
@@ -466,6 +489,7 @@ namespace Renderer
 
 	void setScissor(const Rect& _scissor)
 	{
+		//printf("SETSCISSOR FUNCT \n"); //QNX
 		if((_scissor.x == 0) && (_scissor.y == 0) && (_scissor.w == 0) && (_scissor.h == 0))
 		{
 			GL_CHECK_ERROR(glDisable(GL_SCISSOR_TEST));
@@ -483,6 +507,7 @@ namespace Renderer
 
 	void setSwapInterval()
 	{
+		//printf("ATTEMPTING SWAP INTERVAL\n"); //QNX
 		// vsync
 		if(Settings::getInstance()->getBool("VSync"))
 		{
@@ -504,6 +529,7 @@ namespace Renderer
 
 	void swapBuffers()
 	{
+		printf("EmulationStation: | SWAP BUFFERS\n");//QNX
 		SDL_GL_SwapWindow(getSDLWindow());
 		GL_CHECK_ERROR(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 

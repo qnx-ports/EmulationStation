@@ -354,7 +354,7 @@ int main(int argc, char* argv[])
 	CollectionSystemManager::init(&window);
 	MameNames::init();
 	window.pushGui(ViewController::get());
-	printf("QNX: Pushing GUI L356\n"); //QNX
+	printf("main.cpp | Pushing GUI line 357\n"); //QNX
 
 	bool splashScreen = Settings::getInstance()->getBool("SplashScreen");
 
@@ -376,7 +376,6 @@ int main(int argc, char* argv[])
 	const char* errorMsg = NULL;
 	if(!loadSystemConfigFile(splashScreen ? &window : nullptr, &errorMsg))
 	{
-		printf("Test 1\n"); //QNX
 		// something went terribly wrong
 		if(errorMsg == NULL)
 		{
@@ -385,7 +384,6 @@ int main(int argc, char* argv[])
 				Renderer::deinit();
 			return 1;
 		}
-		printf("Test 1a\n");//QNX
 
 		// we can't handle es_systems.cfg file problems inside ES itself, so display the error message then quit
 		window.pushGui(new GuiMsgBox(&window,
@@ -396,7 +394,6 @@ int main(int argc, char* argv[])
 				SDL_PushEvent(quit);
 			}));
 	}
-	printf("Test 2\n"); //QNX
 
 	//run the command line scraper then quit
 	if(scrape_cmdline)
@@ -420,7 +417,7 @@ int main(int argc, char* argv[])
 		{
 			ViewController::get()->goToStart();
 		}else{
-			printf("QNX: Pushing GUI L422\n");
+			printf("main.cpp | Pushing GUI line 423\n");
 			window.pushGui(new GuiDetectDevice(&window, true, [] { ViewController::get()->goToStart(); }));
 		}
 	}

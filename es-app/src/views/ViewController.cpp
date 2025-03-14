@@ -462,7 +462,7 @@ void ViewController::update(int deltaTime)
 
 void ViewController::render(const Transform4x4f& parentTrans)
 {
-	printf("Rendering Debug Message\n");
+	printf("ViewController.cpp | ::render\n");
 	Transform4x4f trans = mCamera * parentTrans;
 	Transform4x4f transInverse;
 	transInverse.invert(trans);
@@ -480,7 +480,7 @@ void ViewController::render(const Transform4x4f& parentTrans)
 	// draw gamelists
 	for(auto it = mGameListViews.cbegin(); it != mGameListViews.cend(); it++)
 	{
-		printf("Gamelist count\n"); //QNX
+		//printf("Gamelist count\n"); //QNX
 		// clipping
 		Vector3f guiStart = it->second->getPosition();
 		Vector3f guiEnd = it->second->getPosition() + Vector3f(it->second->getSize().x(), it->second->getSize().y(), 0);
@@ -490,7 +490,7 @@ void ViewController::render(const Transform4x4f& parentTrans)
 			it->second->render(trans);
 	}
 
-	printf("Post Gamelist count\n"); //QNX
+	//printf("Post Gamelist count\n"); //QNX
 	if(mWindow->peekGui() == this)
 		mWindow->renderHelpPromptsEarly();
 

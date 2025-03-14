@@ -172,10 +172,10 @@ void Settings::setDefaults()
 	mBoolMap["ForceKid"] = false;
 	mBoolMap["ForceDisableFilters"] = false;
 
-	mIntMap["WindowWidth"]   = 0;
-	mIntMap["WindowHeight"]  = 0;
-	mIntMap["ScreenWidth"]   = 0;
-	mIntMap["ScreenHeight"]  = 0;
+	mIntMap["WindowWidth"]   = 1920;
+	mIntMap["WindowHeight"]  = 1080;
+	mIntMap["ScreenWidth"]   = 1920;
+	mIntMap["ScreenHeight"]  = 1080;
 	mIntMap["ScreenOffsetX"] = 0;
 	mIntMap["ScreenOffsetY"] = 0;
 	mIntMap["ScreenRotate"]  = 0;
