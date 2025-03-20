@@ -90,15 +90,6 @@ namespace Renderer
 		screenOffsetX = Settings::getInstance()->getInt("ScreenOffsetX") ? Settings::getInstance()->getInt("ScreenOffsetX") : 0;
 		screenOffsetY = Settings::getInstance()->getInt("ScreenOffsetY") ? Settings::getInstance()->getInt("ScreenOffsetY") : 0;
 		screenRotate  = Settings::getInstance()->getInt("ScreenRotate")  ? Settings::getInstance()->getInt("ScreenRotate")  : 0;
-		printf("Renderer.cpp | Reading in values... \n ");
-		printf("             | windowWidth %d \n ", windowWidth);
-		printf("             | windowHeight %d \n ", windowHeight);
-		printf("             | screenWidth %d \n ", screenWidth);
-		printf("             | screenHeight %d \n ", screenHeight);
-		printf("             | screenOffsetX %d \n ", screenOffsetX);
-		printf("             | screenOffsetY %d \n ", screenOffsetY);
-		printf("             | screenRotate %d \n ", screenRotate);
-		
 
 		setupWindow();
 

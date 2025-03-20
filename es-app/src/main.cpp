@@ -291,7 +291,6 @@ void onExit()
 
 int main(int argc, char* argv[])
 {
-	printf("MAIN FUNC BEGIN\n");
 	std::locale::global(std::locale("C"));
 
 	if(!parseArgs(argc, argv))
@@ -354,7 +353,6 @@ int main(int argc, char* argv[])
 	CollectionSystemManager::init(&window);
 	MameNames::init();
 	window.pushGui(ViewController::get());
-	printf("main.cpp | Pushing GUI line 357\n"); //QNX
 
 	bool splashScreen = Settings::getInstance()->getBool("SplashScreen");
 
@@ -417,7 +415,6 @@ int main(int argc, char* argv[])
 		{
 			ViewController::get()->goToStart();
 		}else{
-			printf("main.cpp | Pushing GUI line 423\n");
 			window.pushGui(new GuiDetectDevice(&window, true, [] { ViewController::get()->goToStart(); }));
 		}
 	}

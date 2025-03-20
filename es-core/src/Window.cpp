@@ -33,7 +33,6 @@ Window::~Window()
 
 void Window::pushGui(GuiComponent* gui)
 {
-	printf("Window.cpp: | Inside Window::pushGui <<<\n"); //QNX
 	if (mGuiStack.size() > 0)
 	{
 		auto& top = mGuiStack.back();

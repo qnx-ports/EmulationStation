@@ -65,7 +65,6 @@ namespace Renderer
 		GL_CHECK_ERROR(glShaderSource(vertexShader, 1, &vertexSource, nullptr));
 		GL_CHECK_ERROR(glCompileShader(vertexShader));
 
-		printf("EmulationStation: | setupShaders\n");//QNX
 		{
 			GLint isCompiled = GL_FALSE;
 			GLint maxLength  = 0;
@@ -252,8 +251,7 @@ namespace Renderer
 
 	unsigned int getWindowFlags()
 	{
-		printf("EmulationStation: | WINDOW FLAGS\n");//QNX
-		return SDL_WINDOW_OPENGL; //is this right????? OPENGLES??
+		return SDL_WINDOW_OPENGL;
 
 	} // getWindowFlags
 
@@ -261,7 +259,6 @@ namespace Renderer
 
 	void setupWindow()
 	{
-		printf("EmulationStaion: | SETUP WINDOW\n");//QNX
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,  SDL_GL_CONTEXT_PROFILE_ES);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
@@ -279,7 +276,6 @@ namespace Renderer
 
 	void createContext()
 	{
-		printf("EmulationStation: | CREATE CONTEXT\n");//QNX
 		sdlContext = SDL_GL_CreateContext(getSDLWindow());
 		SDL_GL_MakeCurrent(getSDLWindow(), sdlContext);
 
@@ -312,7 +308,6 @@ namespace Renderer
 
 	void destroyContext()
 	{
-		printf("EmulationStation: | DESTROY CONTEXT\n");//QNX
 		SDL_GL_DeleteContext(sdlContext);
 		sdlContext = nullptr;
 
@@ -524,7 +519,6 @@ namespace Renderer
 
 	void swapBuffers()
 	{
-		printf("EmulationStation: | SWAP BUFFERS\n");//QNX
 		SDL_GL_SwapWindow(getSDLWindow());
 		GL_CHECK_ERROR(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
