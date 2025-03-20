@@ -272,12 +272,8 @@ namespace Renderer
 	void drawRect(const float _x, const float _y, /*const*/ float _w, /*const*/ float _h, const unsigned int _color, const unsigned int _colorEnd, bool horizontalGradient, const Blend::Factor _srcBlendFactor, const Blend::Factor _dstBlendFactor)
 	{
 		
-		//QNX
-		// _w = 1920;
-		// _h = 1080;
-		const unsigned int color    = /*convertColor(_color);*/ convertColor(0xAABBCCFF); //QNX
+		const unsigned int color    = convertColor(_color);
 		const unsigned int colorEnd = convertColor(_colorEnd);
-		printf("Draw rect call x%f y%f w%f h%f c=0x%08X \n", _x, _y, _w, _h, color); //QNX
 		Vertex             vertices[4];
 
 		vertices[0] = { { _x     ,_y      }, { 0.0f, 0.0f }, color };
